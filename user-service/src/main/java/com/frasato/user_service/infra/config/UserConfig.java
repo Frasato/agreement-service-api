@@ -3,6 +3,7 @@ package com.frasato.user_service.infra.config;
 import com.frasato.user_service.application.usecases.LoginUserUseCase;
 import com.frasato.user_service.application.usecases.RegisterUserUseCase;
 import com.frasato.user_service.domain.repository.UserRepository;
+import com.frasato.user_service.domain.service.TokenService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -21,7 +22,7 @@ public class UserConfig {
         return new RegisterUserUseCase(userRepository, passwordEncoder);
     }
     @Bean
-    public LoginUserUseCase loginUserUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder){
-        return new LoginUserUseCase(userRepository, passwordEncoder);
+    public LoginUserUseCase loginUserUseCase(UserRepository userRepository, PasswordEncoder passwordEncoder, TokenService tokenService){
+        return new LoginUserUseCase(userRepository, passwordEncoder, tokenService);
     }
 }
