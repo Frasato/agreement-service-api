@@ -31,7 +31,7 @@ public class UserRepositoryImpl implements UserRepository {
     public Optional<User> findUserByDocument(String document) {
         return jpaUserRepository.findByDocument(document)
                 .map(entity -> {
-                    return new User(entity.getId(), entity.getName(), entity.getPhone(), entity.getDocument(), entity.getAddress(), entity.getPassword());
+                    return new User(entity.getId(), entity.getName(), entity.getPhone(), entity.getDocument(), entity.getAddress(), entity.getPassword(), entity.getRole());
                 });
     }
 }
