@@ -1,5 +1,6 @@
 package com.frasato.user_service.infra.web.controller;
 
+import com.frasato.user_service.application.dto.LoginResult;
 import com.frasato.user_service.application.usecases.LoginUserUseCase;
 import com.frasato.user_service.application.usecases.RegisterUserUseCase;
 import com.frasato.user_service.domain.model.User;
@@ -32,7 +33,8 @@ public class UserController {
                 requestDto.phone(),
                 requestDto.document(),
                 requestDto.address(),
-                requestDto.password()
+                requestDto.password(),
+                "USER"
         );
 
         registerUserUseCase.register(userDomain);
@@ -41,7 +43,7 @@ public class UserController {
 
     @PostMapping("/login")
     public ResponseEntity<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto loginRequestDto){
-        User user = loginUserUseCase.login(loginRequestDto.document(), loginRequestDto.password());
-        return ResponseEntity.ok().body(new UserLoginResponseDto(user.getId()));
+        LoginResult response = loginUserUseCase.login(loginRequestDto.document(), loginRequestDto.password());
+        return ResponseEntity.ok().body(new UserLoginResponseDto(response.id(), response.token()));
     }
 }
