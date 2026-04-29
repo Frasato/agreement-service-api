@@ -80,4 +80,8 @@ public class User {
     public void validateDocument(){
         if(document.isBlank()) throw new RuntimeException("Document can't be empty");
     }
+
+    public void validateName(){
+        if(name.isBlank()) throw new RuntimeException("Name can't be empty");
+    }
 }
