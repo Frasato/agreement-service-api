@@ -10,8 +10,9 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class CreateUserUseCaseTest {
@@ -40,5 +41,24 @@ class CreateUserUseCaseTest {
 
         User result = registerUserUseCase.register(user);
         assertEquals(user.getName(), result.getName());
+    }
+
+    @Test
+    void shouldThrowExceptionWhenDocumentIsEmpty(){
+        User user = new User(
+            "1",
+            "Gabriel Silva dos Santos",
+            "17991568457",
+            "",
+            "Rua Aurora Forte Neves",
+            "123",
+            "ROLE_USER"
+        );
+
+        assertThrows(RuntimeException.class, () ->{
+            registerUserUseCase.register(user);
+        });
+
+        verify(userRepository, never()).saveUser(any());
     }
 }
