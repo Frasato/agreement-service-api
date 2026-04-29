@@ -13,9 +13,9 @@ public class RegisterUserUseCase {
         this.passwordEncoder = passwordEncoder;
     }
 
-    public void register(User user){
+    public User register(User user){
         user.validateDocument();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        userRepository.saveUser(user);
+        return userRepository.saveUser(user);
     }
 }
