@@ -15,6 +15,7 @@ public class RegisterUserUseCase {
 
     public User register(User user){
         user.validateDocument();
+        user.validateName();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.saveUser(user);
     }
