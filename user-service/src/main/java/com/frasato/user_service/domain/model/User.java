@@ -84,4 +84,8 @@ public class User {
     public void validateName(){
         if(name.isBlank()) throw new RuntimeException("Name can't be empty");
     }
+
+    public void validateRole(){
+        if(!role.equals("ROLE_USER")) throw new RuntimeException("Wrong role for user");
+    }
 }
