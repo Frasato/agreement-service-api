@@ -5,10 +5,11 @@ import com.auth0.jwt.algorithms.Algorithm;
 import com.frasato.user_service.domain.model.User;
 import com.frasato.user_service.domain.service.TokenService;
 import org.springframework.beans.factory.annotation.Value;
-
+import org.springframework.stereotype.Component;
 import java.time.Instant;
 import java.time.temporal.ChronoUnit;
 
+@Component
 public class JwtTokenService implements TokenService {
 
     @Value("${api.security.token.secret}")
