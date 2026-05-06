@@ -33,4 +33,14 @@ public class JwtTokenService implements TokenService {
                 .verify(token)
                 .getSubject();
     }
+
+    @Override
+    public String getRole(String token){
+        return JWT.require(Algorithm.HMAC256(secret))
+                .withIssuer("user-service")
+                .build()
+                .verify(token)
+                .getClaim("role")
+                .asString();
+    }
 }
