@@ -8,5 +8,5 @@ public interface ConsortiumRepository {
     Consortium saveConsortium(Consortium consortium);
     List<Consortium> getAllConsortium();
     Consortium findConsortiumById(String id);
-    Optional<Consortium> findConsortiumByName(String name);
+    void findConsortiumByName(String name);
 }
