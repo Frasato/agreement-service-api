@@ -11,8 +11,13 @@ public class CreateConsortiumUseCase {
         this.consortiumRepository = consortiumRepository;
     }
 
-    public Consortium createNewConsortium(Consortium consortium){
-        consortiumRepository.findConsortiumByName(consortium.getName());
+    public Consortium createNewConsortium(String name, String description, int price){
+        consortiumRepository.findConsortiumByName(name);
+
+        Consortium consortium = new Consortium();
+        consortium.setName(name);
+        consortium.setDescription(description);
+        consortium.setPrice(price);
 
         consortium.validateName();
         consortium.validatePrice();
