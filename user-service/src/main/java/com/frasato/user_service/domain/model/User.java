@@ -1,5 +1,7 @@
 package com.frasato.user_service.domain.model;
 
+import java.util.List;
+
 public class User {
     private String id;
     private String name;
@@ -8,10 +10,11 @@ public class User {
     private String address;
     private String password;
     private String role;
+    private List<String> consortiumIds;
 
     public User(){}
 
-    public User(String id, String name, String phone, String document, String address, String password, String role) {
+    public User(String id, String name, String phone, String document, String address, String password, String role, List<String> consortiumIds) {
         this.id = id;
         this.name = name;
         this.phone = phone;
@@ -19,6 +22,10 @@ public class User {
         this.address = address;
         this.password = password;
         this.role = role;
+        this.consortiumIds = consortiumIds;
+    }
+
+    public User(String id, String name, String phone, String document, String address, String password, String role) {
     }
 
     public String getId() {
@@ -67,6 +74,14 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getConsortiumIds() {
+        return consortiumIds;
+    }
+
+    public void setConsortiumIds(List<String> consortiumIds) {
+        this.consortiumIds = consortiumIds;
     }
 
     public String getRole() {
