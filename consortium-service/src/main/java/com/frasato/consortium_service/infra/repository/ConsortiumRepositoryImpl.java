@@ -4,10 +4,13 @@ import com.frasato.consortium_service.domain.model.Consortium;
 import com.frasato.consortium_service.domain.repository.ConsortiumRepository;
 import com.frasato.consortium_service.infra.persistance.ConsortiumEntity;
 import com.frasato.consortium_service.infra.persistance.JpaConsortiumRepository;
+import org.springframework.stereotype.Component;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+@Component
 public class ConsortiumRepositoryImpl implements ConsortiumRepository {
     private JpaConsortiumRepository jpaRepository;
 
