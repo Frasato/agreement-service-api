@@ -4,14 +4,23 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
+	"os"
 
 	"email-service/internal/models"
+	"email-service/internal/service"
 
+	"github.com/joho/godotenv"
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
 func main() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	err := godotenv.Load()
+	if err != nil {
+		log.Print("Failed to load .env")
+		return
+	}
+
+	conn, err := amqp.Dial("amqp://" + os.Getenv("RABBIT_USER") + ":" + os.Getenv("RABBIT_PASSWORD") + "@localhost:5672/")
 
 	if err != nil {
 		log.Fatal("Failed to connect to RabbitMQ")
@@ -52,9 +61,7 @@ func main() {
 				continue
 			}
 
-			fmt.Println("New email received:")
-			fmt.Println("Subject:", email.Subject)
-			fmt.Println("Message:", email.Message)
+			service.SendEmail(email)
 		}
 	}()
 
