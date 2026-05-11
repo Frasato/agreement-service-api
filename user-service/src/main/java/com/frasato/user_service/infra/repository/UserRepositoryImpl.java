@@ -5,6 +5,8 @@ import com.frasato.user_service.domain.repository.UserRepository;
 import com.frasato.user_service.infra.persistance.JpaUserRepository;
 import com.frasato.user_service.infra.persistance.UserEntity;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -45,5 +47,42 @@ public class UserRepositoryImpl implements UserRepository {
                 .map(entity -> {
                     return new User(entity.getId(), entity.getName(), entity.getPhone(), entity.getDocument(), entity.getAddress(), entity.getPassword(), entity.getRole());
                 });
+    }
+
+    @Override
+    public void saveConsortiumOnUser(String userId, String consortiumId) {
+        Optional<UserEntity> founded = jpaUserRepository.findById(userId);
+        if(founded.isPresent()){
+            UserEntity entity = founded.get();
+            List<String> list = entity.getConsortiumIds();
+
+            for(String id : list){
+                if(id.equals(consortiumId)){
+                    throw new RuntimeException("Consortium already in user list");
+                }
+            }
+
+            list.add(consortiumId);
+            entity.setConsortiumIds(list);
+
+            jpaUserRepository.save(entity);
+        }
+    }
+
+    @Override
+    public User findById(String id) {
+        Optional<UserEntity> founded = jpaUserRepository.findById(id);
+        if(founded.isEmpty()) throw new RuntimeException("User not found on ID: " + id);
+
+        UserEntity entity = founded.get();
+        return new User(
+                entity.getId(),
+                entity.getName(),
+                entity.getPhone(),
+                entity.getDocument(),
+                entity.getAddress(),
+                entity.getPassword(),
+                entity.getRole()
+        );
     }
 }
