@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package consortium;
+
+message ConsortiumItem{
+  string id = 1;
+  string name = 2;
+  string description = 3;
+  int64 price = 4;
+}
+
+message Request {repeated string ids = 1;}
+message Response {repeated ConsortiumItem items = 1;}
+
+service ConsortiumService{
+  rpc SearchConsortium(Request) returns (Response);
+}
