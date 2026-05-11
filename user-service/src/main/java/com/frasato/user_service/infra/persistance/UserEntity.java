@@ -2,6 +2,8 @@ package com.frasato.user_service.infra.persistance;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users")
 public class UserEntity {
@@ -14,9 +16,21 @@ public class UserEntity {
     private String document;
     private String address;
     private String password;
+    private List<String> consortiumIds;
     private String role;
 
     public UserEntity() {}
+
+    public UserEntity(String id, String name, String phone, String document, String address, String password, List<String> consortiumIds, String role) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.document = document;
+        this.address = address;
+        this.password = password;
+        this.consortiumIds = consortiumIds;
+        this.role = role;
+    }
 
     public UserEntity(String id, String name, String phone, String document, String address, String password, String role) {
         this.id = id;
@@ -74,6 +88,14 @@ public class UserEntity {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public List<String> getConsortiumIds() {
+        return consortiumIds;
+    }
+
+    public void setConsortiumIds(List<String> consortiumIds) {
+        this.consortiumIds = consortiumIds;
     }
 
     public String getRole() {
