@@ -2,6 +2,7 @@ package queue
 
 import (
 	"log"
+	"os"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
@@ -9,7 +10,7 @@ import (
 var Channel *amqp.Channel
 
 func ConnectRabbitMq() {
-	conn, err := amqp.Dial("amqp://guest:guest@localhost:5672/")
+	conn, err := amqp.Dial("amqp://" + os.Getenv("RABBIT_USER") + ":" + os.Getenv("RABBIT_PASSWORD") + "@localhost:5672/")
 
 	if err != nil {
 		log.Fatal("Failed to connect to RabbitMQ")
