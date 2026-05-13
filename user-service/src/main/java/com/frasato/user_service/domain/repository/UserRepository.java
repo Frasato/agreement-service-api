@@ -7,6 +7,6 @@ import java.util.Optional;
 public interface UserRepository {
     User saveUser(User user);
     Optional<User> findUserByDocument(String document);
-    void saveConsortiumOnUser(User user);
+    User saveConsortiumOnUser(User user);
     User findById(String id);
 }

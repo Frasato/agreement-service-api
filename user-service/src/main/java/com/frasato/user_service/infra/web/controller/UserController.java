@@ -11,7 +11,6 @@ import com.frasato.user_service.infra.web.dto.AddConsortiumOnUserDto;
 import com.frasato.user_service.infra.web.dto.UserLoginRequestDto;
 import com.frasato.user_service.infra.web.dto.UserLoginResponseDto;
 import com.frasato.user_service.infra.web.dto.UserRegisterRequestDto;
-import com.google.api.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

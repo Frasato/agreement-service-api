@@ -13,15 +13,13 @@ public class AddFavoriteConsortiumUseCase {
         this.userRepository = userRepository;
     }
 
-    public void add(String userId, String consortiumId){
+    public User add(String userId, String consortiumId){
         if(userId.isEmpty() || consortiumId.isBlank()){
             throw new RuntimeException("User id or Consortium id can't be empty");
         }
 
         User user = userRepository.findById(userId);
         List<String> idList = user.getConsortiumIds();
-
-        if(idList == null) idList = new ArrayList<>();
 
         for(String id : idList){
             if(id.equals(consortiumId)) throw new RuntimeException("Consortium already exist in user: " + userId);
@@ -30,6 +28,6 @@ public class AddFavoriteConsortiumUseCase {
         idList.add(consortiumId);
         user.setConsortiumIds(idList);
 
-        userRepository.saveConsortiumOnUser(user);
+        return userRepository.saveConsortiumOnUser(user);
     }
 }
