@@ -30,15 +30,7 @@ public class LoginUserUseCaseTest {
 
     @Test
     void shouldLoginUserSuccess(){
-        User user = new User(
-            "1",
-            "Gabriel Silva dos Santos",
-            "17991568457",
-            "96586565326",
-            "Rua Aurora Forte Neves",
-            "123_encoded",
-            "ROLE_USER"
-        );
+        User user = createUser();
 
         when(userRepository.findUserByDocument("96586565326")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("123", user.getPassword())).thenReturn(true);
@@ -52,15 +44,7 @@ public class LoginUserUseCaseTest {
 
     @Test
     void shouldThrowExceptionWhenPasswordWrong(){
-        User user = new User(
-                "1",
-                "Gabriel Silva dos Santos",
-                "17991568457",
-                "96586565326",
-                "Rua Aurora Forte Neves",
-                "encoded",
-                "ROLE_USER"
-        );
+        User user = createUser();
 
         when(userRepository.findUserByDocument("96586565326")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("123", user.getPassword())).thenReturn(false);
@@ -86,15 +70,7 @@ public class LoginUserUseCaseTest {
 
     @Test
     void shouldGenerateTokenWhenSuccessLogin(){
-        User user = new User(
-                "1",
-                "Gabriel Silva dos Santos",
-                "17991568457",
-                "96586565326",
-                "Rua Aurora Forte Neves",
-                "123_encoded",
-                "ROLE_USER"
-        );
+        User user = createUser();
 
         when(userRepository.findUserByDocument("96586565326")).thenReturn(Optional.of(user));
         when(passwordEncoder.matches("123", user.getPassword())).thenReturn(true);
@@ -103,5 +79,17 @@ public class LoginUserUseCaseTest {
         loginUserUseCase.login("96586565326", "123");
 
         verify(tokenService, times(1)).generateToken(any());
+    }
+
+    private User createUser(){
+        return new User(
+                "1",
+                "Gabriel Silva dos Santos",
+                "17991568457",
+                "96586565326",
+                "Rua Aurora Forte Neves",
+                "123_encoded",
+                "ROLE_USER"
+        );
     }
 }
