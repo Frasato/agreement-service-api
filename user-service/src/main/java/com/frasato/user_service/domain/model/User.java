@@ -26,6 +26,13 @@ public class User {
     }
 
     public User(String id, String name, String phone, String document, String address, String password, String role) {
+        this.id = id;
+        this.name = name;
+        this.phone = phone;
+        this.document = document;
+        this.address = address;
+        this.password = password;
+        this.role = role;
     }
 
     public String getId() {
