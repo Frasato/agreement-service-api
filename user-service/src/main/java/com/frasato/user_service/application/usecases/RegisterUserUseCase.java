@@ -3,6 +3,8 @@ package com.frasato.user_service.application.usecases;
 import com.frasato.user_service.domain.model.User;
 import com.frasato.user_service.domain.repository.UserRepository;
 import org.springframework.security.crypto.password.PasswordEncoder;
+
+import java.util.ArrayList;
 import java.util.Optional;
 
 public class RegisterUserUseCase {
@@ -23,6 +25,7 @@ public class RegisterUserUseCase {
         user.validateDocument();
         user.validateName();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setConsortiumIds(new ArrayList<>());
         return userRepository.saveUser(user);
     }
 }
