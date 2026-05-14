@@ -10,7 +10,7 @@ import (
 var Channel *amqp.Channel
 
 func ConnectRabbitMq() {
-	conn, err := amqp.Dial("amqp://" + os.Getenv("RABBIT_USER") + ":" + os.Getenv("RABBIT_PASSWORD") + "@localhost:5672/")
+	conn, err := amqp.Dial(os.Getenv("RABBITMQ_CONNECTION"))
 
 	if err != nil {
 		log.Fatal("Failed to connect to RabbitMQ")
