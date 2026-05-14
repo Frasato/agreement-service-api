@@ -21,7 +21,6 @@ public class RegisterUserUseCase {
         Optional<User> foundedUser = userRepository.findUserByDocument(user.getDocument());
         if(foundedUser.isPresent()) throw new RuntimeException("User already registered");
 
-        user.validateRole();
         user.validateDocument();
         user.validateName();
         user.setPassword(passwordEncoder.encode(user.getPassword()));

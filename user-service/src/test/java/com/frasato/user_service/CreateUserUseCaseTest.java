@@ -83,25 +83,6 @@ class CreateUserUseCaseTest {
     }
 
     @Test
-    void shouldNotCreateUserWithWrongRole(){
-        User user = new User(
-                "1",
-                "Gabriel Silva dos Santos",
-                "17991568457",
-                "96586565326",
-                "Rua Aurora Forte Neves",
-                "123",
-                "ROLE_MANAGER"
-        );
-
-        assertThrows(RuntimeException.class, () ->{
-            registerUserUseCase.register(user);
-        });
-
-        verify(userRepository, never()).saveUser(any());
-    }
-
-    @Test
     void shouldSaveUserWithEncryptedPassword(){
         User user = new User(
                 "1",
