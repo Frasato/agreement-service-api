@@ -13,7 +13,6 @@ func main() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Print("Failed to load .env")
-		return
 	}
 
 	queue.ConnectRabbitMq()

@@ -17,10 +17,9 @@ func main() {
 	err := godotenv.Load()
 	if err != nil {
 		log.Print("Failed to load .env")
-		return
 	}
 
-	conn, err := amqp.Dial("amqp://" + os.Getenv("RABBIT_USER") + ":" + os.Getenv("RABBIT_PASSWORD") + "@localhost:5672/")
+	conn, err := amqp.Dial(os.Getenv("RABBITMQ_CONNECTION"))
 
 	if err != nil {
 		log.Fatal("Failed to connect to RabbitMQ")
@@ -45,8 +44,6 @@ func main() {
 	if err != nil {
 		log.Fatal("Failed to consume messages")
 	}
-
-	fmt.Println("Worker started")
 
 	forever := make(chan bool)
 
