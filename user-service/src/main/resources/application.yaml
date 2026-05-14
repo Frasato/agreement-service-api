@@ -3,9 +3,9 @@ spring:
     name: user-service
 
   datasource:
-    url: jdbc:postgresql://localhost:5433/user_db
-    username: admin
-    password: admin
+    url: ${DB_URL:jdbc:postgresql://localhost:5433/user_db}
+    username: ${DB_USER:admin}
+    password: ${DB_PASSWORD:admin}
     driver-class-name: org.postgresql.Driver
 
   jpa:
@@ -19,10 +19,13 @@ spring:
 api:
   security:
     token:
-      secret: test_key_jwt
+      secret: ${JWT_SECRET:test_key_jwt}
 
 grpc:
   client:
     consortium-client:
-      address: 'static://localhost:9090'
+      address: ${CONSORTIUM_GRPC_ADDRESS:static://localhost:9090}
       negotiation-type: plaintext
+
+server:
+  address: 0.0.0.0
