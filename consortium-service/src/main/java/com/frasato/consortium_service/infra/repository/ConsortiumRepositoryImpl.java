@@ -78,6 +78,6 @@ public class ConsortiumRepositoryImpl implements ConsortiumRepository {
     @Override
     public void findConsortiumByName(String name) {
         Optional<ConsortiumEntity> founded = jpaRepository.findConsortiumByName(name);
-        if(founded.isEmpty()) throw new RuntimeException("Consortium already exist");
+        if(founded.isPresent()) throw new RuntimeException("Consortium already exist");
     }
 }
