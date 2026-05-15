@@ -12,7 +12,7 @@ public class GrpcConfig {
     @Bean
     public ManagedChannel managedChannel(){
         return ManagedChannelBuilder
-                .forAddress("localhost", 9090)
+                .forAddress("consortium-service", 9090)
                 .usePlaintext()
                 .build();
     }
