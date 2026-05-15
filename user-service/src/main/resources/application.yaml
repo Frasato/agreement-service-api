@@ -24,7 +24,7 @@ api:
 grpc:
   client:
     consortium-client:
-      address: ${CONSORTIUM_GRPC_ADDRESS:static://localhost:9090}
+      address: ${CONSORTIUM_GRPC_ADDRESS:static://consortium-service:9090}
       negotiation-type: plaintext
 
 server:
