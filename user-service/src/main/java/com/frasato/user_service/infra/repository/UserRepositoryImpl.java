@@ -6,6 +6,9 @@ import com.frasato.user_service.infra.exception.UserNotFoundException;
 import com.frasato.user_service.infra.persistance.JpaUserRepository;
 import com.frasato.user_service.infra.persistance.UserEntity;
 import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Repository
@@ -44,9 +47,7 @@ public class UserRepositoryImpl implements UserRepository {
     @Override
     public Optional<User> findUserByDocument(String document) {
         return jpaUserRepository.findByDocument(document)
-                .map(entity -> {
-                    return new User(entity.getId(), entity.getName(), entity.getPhone(), entity.getDocument(), entity.getAddress(), entity.getPassword(), entity.getRole());
-                });
+                .map(entity -> new User(entity.getId(), entity.getName(), entity.getPhone(), entity.getDocument(), entity.getAddress(), entity.getPassword(), entity.getRole()));
     }
 
     @Override
@@ -85,5 +86,25 @@ public class UserRepositoryImpl implements UserRepository {
                 entity.getRole(),
                 entity.getConsortiumIds()
         );
+    }
+
+    @Override
+    public List<User> allUsers() {
+        List<UserEntity> entityList = jpaUserRepository.findAll();
+        List<User> users = new ArrayList<>();
+        entityList
+                .forEach(entity -> users.add(
+                        new User(
+                                entity.getId(),
+                                entity.getName(),
+                                entity.getPhone(),
+                                entity.getDocument(),
+                                entity.getAddress(),
+                                entity.getPassword(),
+                                entity.getRole(),
+                                entity.getConsortiumIds())
+                        )
+                );
+        return users;
     }
 }
