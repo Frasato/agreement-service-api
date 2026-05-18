@@ -2,8 +2,7 @@ package com.frasato.consortium_service.application.usecase;
 
 import com.frasato.consortium_service.domain.model.Consortium;
 import com.frasato.consortium_service.domain.repository.ConsortiumRepository;
-
-import java.util.Optional;
+import com.frasato.consortium_service.infra.exception.MissingParamException;
 
 public class FindOneConsortiumUseCase {
 
@@ -14,9 +13,8 @@ public class FindOneConsortiumUseCase {
     }
 
     public Consortium findOne(String id){
-        if(id.isEmpty()) throw new RuntimeException("id can't be empty");
+        if(id.isEmpty()) throw new MissingParamException("ID");
 
-        Consortium foundedConsortium = consortiumRepository.findConsortiumById(id);
-        return foundedConsortium;
+        return consortiumRepository.findConsortiumById(id);
     }
 }

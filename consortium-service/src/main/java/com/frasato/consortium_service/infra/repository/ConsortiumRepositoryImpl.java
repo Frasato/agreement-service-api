@@ -2,17 +2,18 @@ package com.frasato.consortium_service.infra.repository;
 
 import com.frasato.consortium_service.domain.model.Consortium;
 import com.frasato.consortium_service.domain.repository.ConsortiumRepository;
+import com.frasato.consortium_service.infra.exception.ConsortiumAlreadyExistException;
+import com.frasato.consortium_service.infra.exception.ConsortiumNotFoundException;
 import com.frasato.consortium_service.infra.persistance.ConsortiumEntity;
 import com.frasato.consortium_service.infra.persistance.JpaConsortiumRepository;
 import org.springframework.stereotype.Component;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Component
 public class ConsortiumRepositoryImpl implements ConsortiumRepository {
-    private JpaConsortiumRepository jpaRepository;
+    private final JpaConsortiumRepository jpaRepository;
 
     public ConsortiumRepositoryImpl(JpaConsortiumRepository jpaRepository){
         this.jpaRepository = jpaRepository;
@@ -61,7 +62,7 @@ public class ConsortiumRepositoryImpl implements ConsortiumRepository {
     @Override
     public Consortium findConsortiumById(String id) {
         Optional<ConsortiumEntity> founded = jpaRepository.findById(id);
-        if(founded.isEmpty()) throw new RuntimeException("Consortium not found on ID: " + id);
+        if(founded.isEmpty()) throw new ConsortiumNotFoundException(id);
 
         ConsortiumEntity consortiumEntity = founded.get();
 
@@ -78,6 +79,6 @@ public class ConsortiumRepositoryImpl implements ConsortiumRepository {
     @Override
     public void findConsortiumByName(String name) {
         Optional<ConsortiumEntity> founded = jpaRepository.findConsortiumByName(name);
-        if(founded.isPresent()) throw new RuntimeException("Consortium already exist");
+        if(founded.isPresent()) throw new ConsortiumAlreadyExistException();
     }
 }
