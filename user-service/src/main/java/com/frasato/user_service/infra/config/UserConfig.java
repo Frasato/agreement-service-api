@@ -1,9 +1,6 @@
 package com.frasato.user_service.infra.config;
 
-import com.frasato.user_service.application.usecases.AddFavoriteConsortiumUseCase;
-import com.frasato.user_service.application.usecases.LoginUserUseCase;
-import com.frasato.user_service.application.usecases.RegisterUserUseCase;
-import com.frasato.user_service.application.usecases.UserDetailsUseCase;
+import com.frasato.user_service.application.usecases.*;
 import com.frasato.user_service.domain.repository.ConsortiumIntegrationRepository;
 import com.frasato.user_service.domain.repository.UserRepository;
 import com.frasato.user_service.domain.service.TokenService;
@@ -35,5 +32,9 @@ public class UserConfig {
     @Bean
     public UserDetailsUseCase detailsUseCase(ConsortiumIntegrationRepository integrationRepository, UserRepository userRepository){
         return new UserDetailsUseCase(integrationRepository, userRepository);
+    }
+    @Bean
+    public ListOfUsersUseCase listOfUsersUseCase(UserRepository userRepository){
+        return new ListOfUsersUseCase(userRepository);
     }
 }
