@@ -3,6 +3,7 @@ package handlers
 import (
 	"email-service/internal/models"
 	"email-service/internal/queue"
+	"email-service/internal/service"
 	"encoding/json"
 	"net/http"
 
@@ -12,6 +13,25 @@ import (
 
 func SendEmail(ctx *gin.Context) {
 	var body models.SendEmailRequest
+
+	token := ctx.GetHeader("Authorization")
+	role, tokenErr := service.ValidateToken(token)
+
+	if tokenErr != nil {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": tokenErr.Error(),
+		})
+
+		return
+	}
+
+	if role != "ADMIN" {
+		ctx.JSON(http.StatusUnauthorized, gin.H{
+			"error": "You don't have authorization to send email",
+		})
+
+		return
+	}
 
 	if err := ctx.ShouldBindJSON(&body); err != nil {
 		ctx.JSON(http.StatusBadRequest, gin.H{
