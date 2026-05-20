@@ -40,6 +40,6 @@ func ValidateToken(tokenString string) (string, error) {
 }
 
 func RemovePrefix(token string) string {
-	token = strings.TrimPrefix("Bearer ", token)
+	token = strings.TrimPrefix(token, "Bearer ")
 	return token
 }
