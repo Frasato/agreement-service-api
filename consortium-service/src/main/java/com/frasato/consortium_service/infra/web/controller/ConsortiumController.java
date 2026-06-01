@@ -46,7 +46,7 @@ public class ConsortiumController {
 
     @PostMapping("/create")
     public ResponseEntity<EntityModel<ResponseConsortiumDto>> createConsortium(@RequestBody RequestCreateConsortiumDto createConsortiumDto){
-        Consortium consortium = createConsortiumUseCase.createNewConsortium(createConsortiumDto.name(), createConsortiumDto.description(), createConsortiumDto.price());
+        Consortium consortium = createConsortiumUseCase.createNewConsortium(createConsortiumDto.userId(), createConsortiumDto.name(), createConsortiumDto.description(), createConsortiumDto.price());
         EntityModel<ResponseConsortiumDto> responseConsortiumDto = consortiumAssembler.createConsortiumAssembler(consortium);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseConsortiumDto);
     }
