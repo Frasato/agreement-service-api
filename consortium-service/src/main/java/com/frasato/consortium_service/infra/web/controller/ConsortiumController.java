@@ -4,8 +4,10 @@ import com.frasato.consortium_service.application.usecase.CreateConsortiumUseCas
 import com.frasato.consortium_service.application.usecase.FindOneConsortiumUseCase;
 import com.frasato.consortium_service.application.usecase.ListConsortiumsUseCase;
 import com.frasato.consortium_service.domain.model.Consortium;
+import com.frasato.consortium_service.infra.service.UpdateConsortiumAdapter;
 import com.frasato.consortium_service.infra.web.assembler.ConsortiumAssembler;
 import com.frasato.consortium_service.infra.web.dto.RequestCreateConsortiumDto;
+import com.frasato.consortium_service.infra.web.dto.RequestUpdatePriceDto;
 import com.frasato.consortium_service.infra.web.dto.ResponseAllConsortiumDto;
 import com.frasato.consortium_service.infra.web.dto.ResponseConsortiumDto;
 import org.springframework.hateoas.CollectionModel;
@@ -22,12 +24,14 @@ public class ConsortiumController {
     private final FindOneConsortiumUseCase findOneConsortiumUseCase;
     private final ListConsortiumsUseCase listConsortiumsUseCase;
     private final ConsortiumAssembler consortiumAssembler;
+    private final UpdateConsortiumAdapter updateConsortiumAdapter;
 
-    public ConsortiumController(CreateConsortiumUseCase createConsortiumUseCase, FindOneConsortiumUseCase findOneConsortiumUseCase, ListConsortiumsUseCase listConsortiumsUseCase, ConsortiumAssembler consortiumAssembler){
+    public ConsortiumController(CreateConsortiumUseCase createConsortiumUseCase, FindOneConsortiumUseCase findOneConsortiumUseCase, ListConsortiumsUseCase listConsortiumsUseCase, ConsortiumAssembler consortiumAssembler, UpdateConsortiumAdapter updateConsortiumAdapter){
         this.createConsortiumUseCase = createConsortiumUseCase;
         this.findOneConsortiumUseCase = findOneConsortiumUseCase;
         this.listConsortiumsUseCase = listConsortiumsUseCase;
         this.consortiumAssembler = consortiumAssembler;
+        this.updateConsortiumAdapter = updateConsortiumAdapter;
     }
 
     @GetMapping("/all")
@@ -49,5 +53,12 @@ public class ConsortiumController {
         Consortium consortium = createConsortiumUseCase.createNewConsortium(createConsortiumDto.userId(), createConsortiumDto.name(), createConsortiumDto.description(), createConsortiumDto.price());
         EntityModel<ResponseConsortiumDto> responseConsortiumDto = consortiumAssembler.createConsortiumAssembler(consortium);
         return ResponseEntity.status(HttpStatus.CREATED).body(responseConsortiumDto);
+    }
+
+    @PatchMapping("/price")
+    public ResponseEntity<EntityModel<ResponseConsortiumDto>> updatePrice(@RequestBody RequestUpdatePriceDto updatePriceDto){
+        Consortium consortium = updateConsortiumAdapter.updatePrice(updatePriceDto.userId(), updatePriceDto.consortiumId(), updatePriceDto.price());
+        EntityModel<ResponseConsortiumDto> response = consortiumAssembler.createConsortiumAssembler(consortium);
+        return ResponseEntity.status(HttpStatus.OK).body(response);
     }
 }
