@@ -1,9 +1,6 @@
 package com.frasato.consortium_service.infra.config;
 
-import com.frasato.consortium_service.application.usecase.CreateConsortiumUseCase;
-import com.frasato.consortium_service.application.usecase.FindOneConsortiumUseCase;
-import com.frasato.consortium_service.application.usecase.HistoricProducerUseCase;
-import com.frasato.consortium_service.application.usecase.ListConsortiumsUseCase;
+import com.frasato.consortium_service.application.usecase.*;
 import com.frasato.consortium_service.domain.repository.ConsortiumRepository;
 import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.context.annotation.Bean;
@@ -31,6 +28,11 @@ public class ConsortiumConfig {
     @Bean
     public HistoricProducerUseCase historicProducerUseCase(AmqpTemplate amqpTemplate, ObjectMapper objectMapper){
         return new HistoricProducerUseCase(amqpTemplate, objectMapper);
+    }
+
+    @Bean
+    public UpdateConsortiumUseCase updateConsortiumUseCase(ConsortiumRepository consortiumRepository, HistoricProducerUseCase historicProducerUseCase){
+        return new UpdateConsortiumUseCase(consortiumRepository, historicProducerUseCase);
     }
 
 }
