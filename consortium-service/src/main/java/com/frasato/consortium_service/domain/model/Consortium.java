@@ -9,6 +9,7 @@ public class Consortium {
     private Integer price;
     private Boolean active;
     private Instant includedAt;
+    private Long version;
 
     public Consortium() {}
 
@@ -68,6 +69,10 @@ public class Consortium {
     public void setIncludedAt(Instant includedAt) {
         this.includedAt = includedAt;
     }
+
+    public Long getVersion() {return version;}
+
+    public void setVersion(Long version) {this.version = version;}
 
     public void validateName(){
         if(this.name.isEmpty()) throw new RuntimeException("Name can't be empty");

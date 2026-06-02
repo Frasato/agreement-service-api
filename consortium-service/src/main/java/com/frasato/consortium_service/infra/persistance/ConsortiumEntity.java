@@ -16,6 +16,8 @@ public class ConsortiumEntity {
     private Integer price;
     private Boolean active;
     private Instant includedAt;
+    @Version
+    private Long version;
 
     public ConsortiumEntity() {}
 
@@ -75,6 +77,10 @@ public class ConsortiumEntity {
     public void setIncludedAt(Instant includedAt) {
         this.includedAt = includedAt;
     }
+
+    public Long getVersion() {return version;}
+
+    public void setVersion(Long version) {this.version = version;}
 
     @PrePersist
     private void setDate(){
